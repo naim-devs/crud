@@ -6,7 +6,7 @@
 
 A lightweight, high-performance, and feature-rich CRUD (Create, Read, Update, Delete) user management interface. This project is built entirely with vanilla JavaScript, HTML, and CSS, and it leverages **LocalStorage** for data persistence, making it a powerful serverless demo.
 
-![Project Screenshot](https://i.imgur.com/8a1t8d5.png)
+
 
 ---
 
