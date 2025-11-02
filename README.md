@@ -75,9 +75,5 @@ This project requires no build steps or dependencies. You can run it directly in
 
 ---
 
-## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/naim-devs/crud/issues).
-
----
 
