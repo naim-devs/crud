@@ -5,7 +5,7 @@
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-![Project Showcase](https://i.imgur.com/8a1t8d5.png)
+
 
 A high-performance, feature-rich, and fully responsive CRUD (Create, Read, Update, Delete) application built entirely with **Vanilla JavaScript**. This project serves as a powerful demonstration of modern frontend development principles without relying on any frameworks or backend services. All data is persisted directly in the browser's **LocalStorage**.
 
