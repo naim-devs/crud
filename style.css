@@ -1,100 +1,385 @@
+/* ==========================================================================
+   1. GLOBAL VARIABLES & BASE STYLES
+   - Defines the project's design tokens (colors, fonts, sizing)
+     and applies foundational resets and body styles.
+   ========================================================================== */
+:root {
+    /* Color Palette */
+    --bg-gradient: linear-gradient(180deg, #071421 0%, #031018 100%);
+    --surface: #0b1220;
+    --card-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    --border-color: rgba(255, 255, 255, 0.08);
+    --muted-text: #9aa4b2;
+    --primary-text: #e6eef6;
+    --accent: #06b6d4;
+    --accent-hover: #2dd4bf; /* A slightly different shade for hover states */
+    --accent-dark-text: #042027;
+    --danger: #ef4444;
+    --danger-hover: #f87171; /* A lighter red for hover states */
 
-:root{
-  --bg:#0f1724; /* fallback removed, using modern light/dark-ready variables */
-  --surface:#0b1220;
-  --card:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  --muted:#9aa4b2;
-  --accent:#06b6d4;
-  --accent-600:#0aa7c0;
-  --danger:#ef4444;
-  --glass: rgba(255,255,255,0.03);
-  --radius:12px;
-  --shadow: 0 8px 24px rgba(2,6,23,0.45);
-  --max-width:1100px;
-  --ui-font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    /* Sizing & Effects */
+    --radius: 12px;
+    --shadow: 0 8px 24px rgba(2, 6, 23, 0.45);
+    --max-width: 1100px;
+
+    /* Typography */
+    --ui-font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-/* reset & layout */
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:var(--ui-font);background:linear-gradient(180deg,#071421 0%, #031018 100%);color:#e6eef6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:var(--max-width);margin:28px auto;padding:22px}
+/* Universal Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-/* header */
-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
-h1{font-size:18px;margin:0;font-weight:600}
-.lead{margin:0;color:var(--muted);font-size:13px}
+html {
+    /* Improves font rendering on modern displays */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
-/* card */
-.card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.02)}
+body {
+    font-family: var(--ui-font);
+    background: var(--bg-gradient);
+    color: var(--primary-text);
+    padding: 24px;
+}
 
-/* form grid */
-form.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-form.grid input, form.grid select{padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;font-size:14px}
-form.grid .col-2{grid-column:span 2}
+/* ==========================================================================
+   2. LAYOUT & CORE COMPONENTS
+   - Defines the main wrapper, header structure, and the primary card element.
+   ========================================================================== */
+.wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
 
-/* controls */
-.controls{display:flex;gap:8px;align-items:center}
-.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
 
-/* buttons */
-.btn{padding:8px 12px;border-radius:10px;border:none;background:var(--accent);color:#042027;cursor:pointer;font-weight:600}
-.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
-.btn.warn{background:var(--danger);color:white}
-.btn.small{padding:6px 8px;font-size:13px}
+h1 { font-size: 20px; font-weight: 600; }
+h3 { font-size: 18px; margin-bottom: 16px; }
+.lead.muted { font-size: 14px; color: var(--muted-text); }
 
-.btn:active{transform:translateY(1px)}
-.btn:focus{outline:2px solid rgba(6,182,212,0.18);outline-offset:2px}
+.card {
+    background: var(--card-gradient);
+    padding: 24px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+}
 
-/* search */
-.search{flex:1;display:flex;gap:8px}
-.search input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+/* ==========================================================================
+   3. FORMS, INPUTS & CUSTOM CONTROLS
+   - Provides consistent styling for all form elements, including a
+     custom-styled checkbox and preparations for the JS-powered select dropdown.
+   ========================================================================== */
+form.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    align-items: center;
+}
 
-/* table */
-.table-wrap{overflow:auto}
-table{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:8px;font-size:14px}
-thead th{ text-align:left;padding:10px;color:var(--muted);font-weight:600;font-size:13px}
-tbody td{padding:12px;background:transparent}
+input[type="text"],
+input[type="email"] {
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background-color: transparent;
+    color: var(--primary-text);
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
 
-/* list row card style */
-tbody tr{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:10px;box-shadow:0 4px 14px rgba(2,6,23,0.35);transition:transform .18s ease, box-shadow .18s ease}
-tbody tr td{vertical-align:middle;border-bottom:none}
-tbody tr:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(2,6,23,0.5)}
+input::placeholder { color: var(--muted-text); opacity: 0.7; }
+select { display: none; } /* Hidden because a custom JS version is used */
 
-.badge{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;background:rgba(255,255,255,0.03);color:var(--muted)}
+input[type="checkbox"] {
+    -webkit-appearance: none; -moz-appearance: none; appearance: none;
+    width: 18px; height: 18px; border-radius: 4px; border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.02); cursor: pointer; position: relative;
+    transition: background-color 0.2s; vertical-align: middle;
+}
+input[type="checkbox"]:checked { background-color: var(--accent); border-color: var(--accent); }
+input[type="checkbox"]:checked::before {
+    content: ''; position: absolute; top: 2px; left: 5px;
+    width: 5px; height: 10px; border: solid var(--accent-dark-text);
+    border-width: 0 2px 2px 0; transform: rotate(45deg);
+}
 
-.actions{display:flex;gap:6px;align-items:center}
-.actions .btn{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.03)}
-.actions .btn.small{background:transparent}
-.actions .btn.warn{background:var(--danger);color:white;border:none}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+input:focus-visible, .custom-select-trigger:focus-visible { border-color: var(--accent); }
 
-/* footer */
-.footer-row{display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:var(--muted)}
+/* ==========================================================================
+   4. BUTTONS
+   - Defines styles for all button variants and their states (hover, active).
+   ========================================================================== */
+.btn {
+    padding: 10px 16px; border-radius: 10px; border: none;
+    background: var(--accent); color: var(--accent-dark-text);
+    cursor: pointer; font-weight: 600;
+    transition: transform 0.1s ease, background-color 0.2s ease;
+}
+.btn:hover { background-color: var(--accent-hover); }
+.btn:active { transform: scale(0.97); }
+.btn.ghost {
+    background: transparent; border: 1px solid var(--border-color);
+    color: var(--muted-text);
+}
+.btn.ghost:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--primary-text);
+}
+.btn.danger { background: var(--danger); color: white; }
+.btn.danger:hover { background-color: var(--danger-hover); }
+.btn.small { padding: 6px 10px; font-size: 13px; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* modal */
-.modal-backdrop{position:fixed;inset:0;background:linear-gradient(180deg,rgba(2,6,23,0.6),rgba(2,6,23,0.7));display:none;align-items:center;justify-content:center;padding:16px}
-.modal{background:linear-gradient(180deg,#071827,#041018);padding:18px;border-radius:12px;min-width:320px;max-width:640px;box-shadow:0 20px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
-.modal h3{margin:0 0 10px 0;font-size:16px}
+/* ==========================================================================
+   5. TOOLBAR & SEARCH
+   - Styles the control bar above the table. Uses a robust flexbox layout.
+   ========================================================================== */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+.toolbar .search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1 1 320px;
+}
+.toolbar .search #search {
+    flex-grow: 1;
+    background-color: transparent;
+    padding: 11px 14px 11px 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%239aa4b2' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 S0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 12px center;
+}
+.toolbar div[style*="margin-left: auto"] {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: 0 !important;
+}
 
-/* responsive improvements */
-@media (max-width:900px){form.grid{grid-template-columns:repeat(2,1fr)} .col-2{grid-column:span 2}}
-@media (max-width:520px){form.grid{grid-template-columns:1fr} .col-2{grid-column:span 1} header{flex-direction:column;align-items:flex-start;gap:8px}}
+/* ==========================================================================
+   6. DATA TABLE
+   - Base styles for the desktop table view. Mobile styles are in section 10.
+   ========================================================================== */
+.table-wrap { overflow-x: auto; }
+table {
+    width: 100%; border-collapse: separate;
+    border-spacing: 0 8px; font-size: 14px;
+}
+thead th {
+    text-align: left; padding: 10px 16px; color: var(--muted-text);
+    font-weight: 600; font-size: 13px; text-transform: uppercase;
+    white-space: nowrap;
+}
+tbody tr {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0.005));
+    border-radius: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+tbody tr:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(2, 6, 23, 0.5); }
+tbody td { padding: 14px 16px; vertical-align: middle; }
+tbody td:first-child { border-radius: 10px 0 0 10px; }
+tbody td:last-child { border-radius: 0 10px 10px 0; }
 
-/* utility */
-.muted{color:var(--muted)}
+/* Redesigned Action Buttons */
+tbody td:last-child {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+tbody .btn.small {
+    border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+tbody .btn.small:not(.danger) {
+    background-color: transparent;
+    border-color: var(--accent);
+    color: var(--accent);
+}
+tbody .btn.small:not(.danger):hover {
+    background-color: var(--accent);
+    color: var(--accent-dark-text);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(6, 182, 212, 0.2);
+}
+tbody .btn.small.danger {
+    background-color: transparent;
+    border-color: var(--danger);
+    color: var(--danger);
+}
+tbody .btn.small.danger:hover {
+    background-color: var(--danger);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
+}
 
-/* accessibility tweaks */
-input:focus,select:focus,button:focus{outline:none}
+.role {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: 12px; font-weight: 600; text-transform: capitalize; color: #fff;
+}
+.role.admin { background-color: #c23b22; }
+.role.user { background-color: #007bff; }
+.role.guest { background-color: #6c757d; }
 
-/* fixes for earlier bugs */
-/* 1) ensure table rows render as block-like to respect gap and radius */
-tbody tr td:first-child{width:34px}
+/* ==========================================================================
+   7. MODAL DIALOG
+   - Styles for the modal backdrop and the modal itself, including animations.
+   ========================================================================== */
+.modal-backdrop {
+    position: fixed; inset: 0; background: rgba(3, 16, 24, 0.7);
+    backdrop-filter: blur(5px); display: flex; align-items: center;
+    justify-content: center; z-index: 1000; opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.modal-backdrop.visible { opacity: 1; visibility: visible; }
+.modal {
+    background: var(--bg-gradient); padding: 24px; border-radius: var(--radius);
+    width: 90%; max-width: 600px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--border-color); transform: scale(0.95) translateY(-10px);
+    transition: transform 0.3s ease;
+}
+.modal-backdrop.visible .modal { transform: scale(1) translateY(0); }
 
-/* 2) make checkboxes visible on dark bg */
-input[type="checkbox"]{width:16px;height:16px;border-radius:4px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02)}
+/* ==========================================================================
+   8. FOOTER & PAGINATION
+   - Styles for the summary and pagination controls at the bottom of the card.
+   ========================================================================== */
+.footer-row {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px; margin-top: 16px;
+    color: var(--muted-text); font-size: 14px;
+}
 
-/* 3) prevent layout shift when modal opens */
-html.modal-open{overflow:hidden}
+/* ==========================================================================
+   9. CUSTOM SELECT DROPDOWN (JS-DEPENDENT)
+   - These styles are designed to work with a JavaScript-powered custom dropdown.
+   ========================================================================== */
+.custom-select-container { position: relative; width: 100%; }
+.toolbar .custom-select-container { min-width: 130px; width: auto; }
+.custom-select-trigger {
+    padding: 11px 40px 11px 14px; border-radius: 10px; border: 1px solid var(--border-color);
+    background-color: transparent; color: var(--primary-text); font-size: 14px;
+    cursor: pointer; position: relative; transition: border-color 0.2s, box-shadow 0.2s;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.custom-select-trigger::after {
+    content: ''; position: absolute; right: 14px; top: 50%;
+    transform: translateY(-50%); width: 12px; height: 12px;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%239aa4b2' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat; background-position: center;
+    transition: transform 0.2s ease;
+}
+.custom-options {
+    position: absolute; top: calc(100% + 6px); left: 0; width: 100%;
+    background: var(--surface); border: 1px solid var(--border-color);
+    border-radius: 10px; box-shadow: var(--shadow); z-index: 1010;
+    max-height: 200px; overflow-y: auto; opacity: 0; visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+.custom-options.open { opacity: 1; visibility: visible; transform: translateY(0); }
+.custom-option {
+    padding: 12px 16px; color: var(--primary-text); cursor: pointer;
+    transition: background-color 0.2s;
+}
+.custom-option:hover { background-color: rgba(6, 182, 212, 0.1); }
+.custom-option.selected {
+    background-color: var(--accent); color: var(--accent-dark-text);
+    font-weight: 600;
+}
 
-/* small visual polish */
-.search input::placeholder{color:rgba(255,255,255,0.25)}
+/* ==========================================================================
+   10. MOBILE & RESPONSIVE DESIGN
+   - All mobile-specific adjustments are here. This section makes the app
+     fully responsive and user-friendly on smaller screens.
+   ========================================================================== */
+@media (max-width: 768px) {
+    body { padding: 16px; }
+    .card { padding: 16px; }
 
+    header, .footer-row {
+        flex-direction: column; align-items: flex-start; gap: 12px;
+    }
+    .toolbar {
+        flex-direction: column; align-items: stretch;
+    }
+    .toolbar .search { flex-basis: auto; }
+
+    /* === ADVANCED: Transform table to a card-based layout on mobile === */
+    .table-wrap { overflow: visible; }
+    table, thead, tbody, th, td, tr { display: block; }
+    
+    thead { display: none; } /* Hide headers, labels will be added in cells */
+
+    tbody tr {
+        margin-bottom: 16px;
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        box-shadow: none;
+    }
+    
+    tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 4px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        text-align: right;
+    }
+    tbody tr td:last-child {
+        border-bottom: none;
+        padding-top: 16px;
+        justify-content: flex-end; /* Align action buttons to the right */
+    }
+
+    /* Add labels before cell content */
+    tbody td::before {
+        content: attr(data-label); /* JS should add 'data-label' attributes */
+        font-weight: 600;
+        color: var(--muted-text);
+        text-align: left;
+        margin-right: 16px;
+    }
+
+    /* Assign labels using CSS content property */
+    tbody td:nth-of-type(1) { display: none; } /* Hide checkbox cell if not needed */
+    tbody td:nth-of-type(2)::before { content: "Name"; }
+    tbody td:nth-of-type(3)::before { content: "Email"; }
+    tbody td:nth-of-type(4)::before { content: "Role"; }
+    tbody td:nth-of-type(5)::before { content: "Created"; }
+    tbody td:nth-of-type(6)::before { content: "Actions"; }
+    
+    /* Make Role and Actions content align right correctly */
+    tbody td:nth-of-type(4) .role,
+    tbody td:nth-of-type(6) {
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 500px) {
+    form.grid { grid-template-columns: 1fr; }
+}```
